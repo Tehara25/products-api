@@ -43,4 +43,11 @@ public class ProductService {
     public boolean deleteProduct(Long id) {
         return products.removeIf(p -> p.getId().equals(id));
     }
+
+    // finds products whose name contains the text
+    public List<Product> findByName(String name) {
+        return products.stream()
+                .filter(p -> p.getName().contains(name))
+                .toList();
+    }
 }
