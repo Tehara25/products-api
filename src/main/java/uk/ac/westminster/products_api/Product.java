@@ -1,14 +1,12 @@
 package uk.ac.westminster.products_api;
 
-
-
 public class Product {
 
     private Long id;
     private String name;
     private double price;
 
-    // empty constructor, needed later when JSON arrives in a POST request
+    // empty constructor, needed by Jackson for POST requests
     public Product() {
     }
 
@@ -18,16 +16,27 @@ public class Product {
         this.price = price;
     }
 
-    // getters, the doors Jackson uses to read the data
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public double getPrice() {
         return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }
