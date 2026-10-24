@@ -6,7 +6,7 @@ public class Product {
     private String name;
     private double price;
 
-    // empty constructor, needed by Jackson for POST requests
+    // empty constructor, Jackson needs it
     public Product() {
     }
 

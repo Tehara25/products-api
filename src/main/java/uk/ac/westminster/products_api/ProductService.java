@@ -9,16 +9,19 @@ import java.util.Optional;
 @Service
 public class ProductService {
 
-    // private so the controller cannot touch the list directly
+    // one list holds both types because each IS-A Product
     private List<Product> products = new ArrayList<>();
 
-    // the next id to give out, starts at 3 because 1 and 2 are used below
+    // ids 1 and 2 are used by the sample products
     private Long nextId = 3L;
 
-    // runs when Spring creates the service, adds two sample products
     public ProductService() {
-        products.add(new Product(1L, "Laptop", 999.99));
-        products.add(new Product(2L, "Mouse", 19.99));
+        products.add(new DigitalProduct(
+                1L, "Clean Code (E-book)", 29.99,
+                "/downloads/clean-code.pdf", 4.2));
+        products.add(new PhysicalProduct(
+                2L, "27-inch Monitor", 249.99,
+                5.4, "61cm x 41cm x 18cm"));
     }
 
     public List<Product> getAllProducts() {
@@ -31,7 +34,6 @@ public class ProductService {
                 .findFirst();
     }
 
-    // business rule: the service gives every new product the next id
     public Product addProduct(Product product) {
         product.setId(nextId);
         nextId += 1L;
@@ -39,12 +41,10 @@ public class ProductService {
         return product;
     }
 
-    // returns true if a product was removed, false if the id was not found
     public boolean deleteProduct(Long id) {
         return products.removeIf(p -> p.getId().equals(id));
     }
 
-    // finds products whose name contains the text
     public List<Product> findByName(String name) {
         return products.stream()
                 .filter(p -> p.getName().contains(name))

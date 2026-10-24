@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +26,11 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
+    @GetMapping("/search")
+    public List<Product> search(@RequestParam String name) {
+        return productService.findByName(name);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
         Optional<Product> product = productService.getProductById(id);
@@ -37,7 +42,6 @@ public class ProductController {
         }
     }
 
-    // JSON in the request body becomes a Product object
     @PostMapping
     public Product saveProduct(@RequestBody Product product) {
         return productService.addProduct(product);
@@ -52,12 +56,5 @@ public class ProductController {
         } else {
             return ResponseEntity.notFound().build();
         }
-
-
-    }
-
-    @GetMapping("/search")
-    public List<Product> search(@RequestParam String name) {
-        return productService.findByName(name);
     }
 }
